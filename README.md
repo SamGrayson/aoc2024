@@ -2,6 +2,8 @@
 
 Advent of code 2024 repository
 
+Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
+
 ## Get Started
 
 - Copy the "day_template" on each day, replace with the required data and inputs.
