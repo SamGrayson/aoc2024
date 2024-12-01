@@ -1,3 +1,9 @@
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
+
+
 def getDiff(g1: list[int], g2: list[int]) -> int:
     g1.sort()
     g2.sort()
@@ -23,7 +29,7 @@ def getSimilarityScore(g1: list[int], g2: list[int]) -> int:
 
 
 def part_1():
-    with open("day_01/input.txt", "r") as file:
+    with open(INPUT_PATH) as file:
         g1 = []
         g2 = []
         for line in file:
@@ -36,7 +42,7 @@ def part_1():
 
 
 def part_2():
-    with open("day_01/input.txt", "r") as file:
+    with open(INPUT_PATH) as file:
         g1 = []
         g2 = []
         for line in file:
