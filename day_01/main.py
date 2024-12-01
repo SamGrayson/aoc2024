@@ -32,7 +32,6 @@ def part_1():
             g2.append(groups[1])
     g1 = list(map(int, g1))
     g2 = list(map(int, g2))
-    file.close()
     print("Part 1: " + str(getDiff(g1, g2)))
 
 
@@ -46,7 +45,6 @@ def part_2():
             g2.append(groups[1])
     g1 = list(map(int, g1))
     g2 = list(map(int, g2))
-    file.close()
     print("Part 2: " + str(getSimilarityScore(g1, g2)))
 
 
