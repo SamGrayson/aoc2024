@@ -23,7 +23,7 @@ def is_safe(l: list[int]) -> bool:
     i+=1
   return len(set(dir_check)) == 1
 
-def allow_failure_is_safe(l):
+def allow_failure_is_safe(l: list[int]) -> bool:
   for idx, i in enumerate(l):
     fresh = l[:]
     fresh.pop(idx)
