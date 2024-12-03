@@ -15,3 +15,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 2](day_02)
 
 - [Red-Nosed Reports](https://adventofcode.com/2024/day/2)
+
+## [Day 3](day_03)
+
+- [Mull It Over](https://adventofcode.com/2024/day/3)
