@@ -6,7 +6,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
-# Searches vertical & horizontal for "mas"
+# Searches vertical for "mas"
 def is_mas(grid: list[list[str]], start: tuple[int, int], dir: tuple[int, int]):
     # Get bounds of grid
     row_max = len(grid)
