@@ -13,7 +13,6 @@ def is_str_dir(
     row_max = len(grid)
     col_max = len(grid[0])
 
-    # 2 more steps tops
     i = len(term) - 1
     progress = term[0]
     current_row, current_col = start
@@ -41,7 +40,7 @@ def get_mas_x(grid: list[list[str]], start: tuple[int, int]) -> int:
     current_row, current_col = start
     mas_count = 0
     for dx, dy in directions_corners:
-        # If next step is in bounds, check for "xmas"
+        # If next step is in bounds, check for X "mas"
         if (
             0 <= current_row + dx < row_max
             and 0 <= current_col + dy < col_max
