@@ -16,7 +16,8 @@ class Test(unittest.TestCase):
         g2 = [1, 1, 1]
         # Should equal 3, 1 appears 3 times
         result = getSimilarityScore(g1, g2)
-        self.assertEqual(result, 3) 
+        self.assertEqual(result, 3)
+
 
 if __name__ == "__main__":
     unittest.main()
