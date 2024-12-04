@@ -1,5 +1,5 @@
 import unittest
-from day_04.main import get_mas_x, get_xmas_x_v, is_mas, is_xmas
+from day_04.main import get_mas_x, get_xmas_x_v, is_str_dir
 
 simple_grid = [
     ["x", "m", "a", "s"],
@@ -10,18 +10,12 @@ simple_grid = [
 
 
 class Test(unittest.TestCase):
-    def test_fan_out_dir_success(self):
-        self.assertTrue(is_xmas(simple_grid, (0, 0), (0, 1)))
-        self.assertTrue(is_xmas(simple_grid, (0, 0), (1, 1)))
+    def test_is_str_dir_success(self):
+        self.assertTrue(is_str_dir(simple_grid, (0, 0), (0, 1), "xmas"))
+        self.assertTrue(is_str_dir(simple_grid, (1, 1), (1, 1), "mas"))
 
-    def test_fan_out_dir_fail(self):
-        self.assertFalse(is_xmas(simple_grid, (0, 0), (1, 0)))
-
-    def test_mas_x_success(self):
-        self.assertTrue(is_mas(simple_grid, (1, 1), (1, 1)))
-
-    def test_mas_x_fail(self):
-        self.assertTrue(is_mas(simple_grid, (1, 3), (1, -1)))
+    def test_is_str_dir_fail(self):
+        self.assertFalse(is_str_dir(simple_grid, (0, 0), (1, 0), "xmas"))
 
     def test_find_all_mas_x(self):
         total_mas_x = 0
