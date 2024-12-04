@@ -17,7 +17,7 @@ def getDiff(g1: list[int], g2: list[int]) -> int:
 def getSimilarityScore(g1: list[int], g2: list[int]) -> int:
     num_count = {}
     for i in g2:
-        num_count[i] = num_count.get(i,0)+1
+        num_count[i] = num_count.get(i, 0) + 1
 
     total_sim_score = 0
     for i in g1:

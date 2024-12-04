@@ -11,11 +11,11 @@ class Test(unittest.TestCase):
         asc_result = is_safe(asc)
         self.assertTrue(desc_result)
         self.assertTrue(asc_result)
-        
+
     def test_is_not_safe(self):
-        nope = [1,8]
-        nope_2 = [1,2,5,4,2]
-        nope_3 = [1,1,1]
+        nope = [1, 8]
+        nope_2 = [1, 2, 5, 4, 2]
+        nope_3 = [1, 1, 1]
         desc_result = is_safe(nope)
         asc_result = is_safe(nope_2)
         no_result = is_safe(nope_3)
@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
         self.assertTrue(asc_result)
         self.assertTrue(eql_result)
         self.assertTrue(first_result)
-        
+
     def test_is_not_safe_one_fail(self):
         desc = [7, 6, 4, 9, 5, 2, 1]
         asc = [1, 3, 1, 2, 5, 8]
@@ -47,7 +47,6 @@ class Test(unittest.TestCase):
         self.assertFalse(desc_result)
         self.assertFalse(asc_result)
         self.assertFalse(eql_result)
-
 
 
 if __name__ == "__main__":
