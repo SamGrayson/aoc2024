@@ -1,8 +1,10 @@
 import time
-from collections import deque
 import os
+
+from collections import deque
 from utils.utils import string_to_grid
 from utils.utils import directions_plus
+
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
