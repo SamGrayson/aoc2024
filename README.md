@@ -27,3 +27,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 5](day_05)
 
 - [Print Queue](https://adventofcode.com/2024/day/5)
+
+## [Day 5](day_06)
+
+- [Guard Gallivant](https://adventofcode.com/2024/day/6)
