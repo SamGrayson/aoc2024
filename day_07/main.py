@@ -16,6 +16,9 @@ def recur_test_value(
     if len(c) > 0:
         add = total + c[0]
         times = total * c[0]
+        # If total already bigger than test, don't keep going
+        if total > test:
+            return total
         if enable_combo:
             combo = int(str(total) + str(c[0]))
         c.popleft()
