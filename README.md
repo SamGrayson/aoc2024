@@ -35,3 +35,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 7](day_07)
 
 - [Bridge Repair](https://adventofcode.com/2024/day/7)
+
+## [Day 8](day_08)
+
+- [Resonant Collinearity](https://adventofcode.com/2024/day/8)
