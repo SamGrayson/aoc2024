@@ -43,3 +43,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 9](day_09)
 
 - [Disk Fragmenter](https://adventofcode.com/2024/day/9)
+
+## [Day 10](day_10)
+
+- [Hoof It](https://adventofcode.com/2024/day/10)

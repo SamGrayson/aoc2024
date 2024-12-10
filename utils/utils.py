@@ -29,3 +29,9 @@ def string_to_grid(string_grid: str):
     grid = [list(row) for row in rows]
 
     return grid
+
+
+def in_bounds(maxr: int, maxc: int, coord: tuple[int, int]) -> bool:
+    if 0 <= coord[0] < maxr and 0 <= coord[1] < maxc:
+        return True
+    return False
