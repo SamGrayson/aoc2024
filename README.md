@@ -39,3 +39,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 8](day_08)
 
 - [Resonant Collinearity](https://adventofcode.com/2024/day/8)
+
+## [Day 9](day_09)
+
+- [Disk Fragmenter](https://adventofcode.com/2024/day/9)
