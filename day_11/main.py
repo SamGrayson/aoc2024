@@ -1,4 +1,4 @@
-from functools import reduce
+from functools import reduce, cache
 import functools
 import os
 import time
@@ -8,6 +8,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
+# "125 17"
 def get_total_count_blinks(start: str, blinks: int) -> int:
     test_str = start
     total_count = 0
@@ -16,8 +17,8 @@ def get_total_count_blinks(start: str, blinks: int) -> int:
     return total_count
 
 
-@functools.cache
-def memoize_blink(i: str, blink_depth: int) -> tuple[int, str]:
+@cache
+def memoize_blink(i: str, blink_depth: int) -> int:
     if blink_depth >= 1:
         # Current stone
         key = i
