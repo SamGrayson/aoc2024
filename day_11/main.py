@@ -8,68 +8,28 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
-class Node:
-    def __init__(self, key, next):
-        self.key = key
-        self.next = next
-
-
-# "0 1 10 99 999"
-def create_ll(input: str) -> Node:
-    split = input.split(" ")
-    return reduce(
-        lambda next_node, value: Node(value, next_node), reversed(split), None
-    )
-
-
 def get_total_count_blinks(start: str, blinks: int) -> int:
     test_str = start
     total_count = 0
-    while blinks >= 1:
-        print("BLINK! - " + str(blinks))
-        blink_count = 0
-        blink_str = ""
-        for s in test_str.split(" "):
-            s_count, new_str = memoize_blink(s)
-            blink_count += s_count
-            blink_str += f" {new_str}"
-        total_count = blink_count
-        test_str = blink_str.strip()
-        blinks -= 1
+    for s in test_str.split(" "):
+        total_count += memoize_blink(s, blinks)
     return total_count
 
 
 @functools.cache
-def memoize_blink(i: str) -> tuple[int, str]:
-    go = True
-    curr = create_ll(i)
-    count = 0
-    new_stones = ""
-    while go:
+def memoize_blink(i: str, blink_depth: int) -> tuple[int, str]:
+    if blink_depth >= 1:
         # Current stone
-        key = curr.key
+        key = i
         if int(key) == 0:
-            curr.key = "1"
-            count += 1
-            new_stones += " 1"
+            return memoize_blink("1", blink_depth - 1)
         elif len(key) % 2 == 0:
-            curr.key = str(int(key[: ceil(len(key) / 2)]))
-            next_node = Node(str(int(key[ceil(len(key) / 2) :])), curr.next)
-            curr.next = next_node
-            # We're splitting the stones, so the next is actually the _new_ next
-            new_stones += f" {curr.key} {next_node.key}"
-            curr = next_node
-            count += 2
+            return memoize_blink(
+                str(int(key[: ceil(len(key) / 2)])), blink_depth - 1
+            ) + memoize_blink(str(int(key[ceil(len(key) / 2) :])), blink_depth - 1)
         else:
-            curr.key = str(int(key) * 2024)
-            count += 1
-            new_stones += f" {curr.key}"
-        # Handle next
-        if curr.next == None:
-            go = False
-        else:
-            curr = curr.next
-    return count, new_stones.strip()
+            return memoize_blink(str(int(key) * 2024), blink_depth - 1)
+    return 1
 
 
 def part_1():
