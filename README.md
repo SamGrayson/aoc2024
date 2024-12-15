@@ -55,3 +55,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 12](day_12)
 
 - [Garden Groups](https://adventofcode.com/2024/day/12)
+
+## [Day 13](day_13)
+
+- [Claw Contraption](https://adventofcode.com/2024/day/13)
