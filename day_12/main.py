@@ -7,7 +7,6 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
-# Check if all items in list are letter
 def check_letter(li: list, letter):
     return any(map(lambda c: c == letter, li))
 
@@ -121,7 +120,6 @@ def get_all_region_prices(grid):
                 all_visited = all_visited.union(visited)
                 total_side_price += a * get_total_shape_sides(grid, visited)
                 total_price += a * p
-                # Get total side price
     return total_price, total_side_price
 
 
