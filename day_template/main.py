@@ -18,5 +18,5 @@ def part_2():
 if __name__ == "__main__":
     start_time = time.time()
     part_1()
-    part_2()
+    # part_2()
     print("Finished in: " + str(round(time.time() - start_time)) + "s")

@@ -59,3 +59,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 13](day_13)
 
 - [Claw Contraption](https://adventofcode.com/2024/day/13)
+
+## [Day 14](day_14)
+
+- [Restroom Redoubt](https://adventofcode.com/2024/day/14)

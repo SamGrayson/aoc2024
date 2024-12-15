@@ -17,6 +17,15 @@ directions_corners = [
 ]
 
 
+def create_matrix(rows, cols, char_override="."):
+    return [[char_override for _ in range(cols)] for _ in range(rows)]
+
+
+def pretty_print_grid(grid):
+    for row in grid:
+        print(" ".join(map(str, row)))
+
+
 def flip_dir(dir: tuple[int, int]):
     return (dir[0] * -1, dir[1] * -1)
 
