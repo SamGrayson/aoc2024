@@ -52,8 +52,7 @@ def calc_token_cost(a_presses: int, b_presses: int) -> int:
     return a_presses * 3 + b_presses * 1
 
 
-# 100 is the limit, just check for the lowest token value
-def get_shortest_win(guidelines: dict[str, tuple[int, int]], max=100) -> int:
+def get_shortest_win(guidelines: dict[str, tuple[int, int]]) -> int:
     x1 = guidelines["a"][0]
     x2 = guidelines["b"][0]
     target_x = guidelines["prize"][0]
