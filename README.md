@@ -51,3 +51,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 11](day_11)
 
 - [Plutonian Pebbles](https://adventofcode.com/2024/day/11)
+
+## [Day 12](day_12)
+
+- [Garden Groups](https://adventofcode.com/2024/day/12)
