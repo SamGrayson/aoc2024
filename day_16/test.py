@@ -1,7 +1,7 @@
 import time
 import unittest
 
-from day_16.main import find_shortest_paths
+from day_16.main import dijkstra_shortest, find_shortest_paths
 from utils.utils import string_to_grid, find_first_str_in_matrix
 
 
@@ -36,6 +36,13 @@ class Test(unittest.TestCase):
         res = find_shortest_paths(test_maze, start)
 
         self.assertEqual(res, 7036)
+
+    def test_d_shortest(self):
+        start = find_first_str_in_matrix(test_maze, "S")
+        end = find_first_str_in_matrix(test_maze, "E")
+        shortest = dijkstra_shortest(test_maze, start, end)
+
+        self.assertEqual(shortest, 7036)
 
     def test_success(self):
         self.assertEqual(True, True)
