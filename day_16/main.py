@@ -15,66 +15,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
-def get_result(l: tuple[int, int]) -> int:
-    steps, turns = l
-    return turns * 1000 + steps
-
-
-def find_shortest_paths(grid: list[list[str]], start: tuple[int, int]) -> int:
-    max_row = len(grid)
-    max_col = len(grid[0])
-
-    visited = {}
-    start_row, start_col = start
-    queue = deque([(start_row, start_col, 0, 0, (0, 0))])
-
-    lowest = 0
-
-    while queue:
-        curr_row, curr_col, steps, turns, prev_dir = queue.popleft()
-
-        res = get_result((steps, turns))
-        if lowest and res > lowest:
-            continue
-
-        if grid[curr_row][curr_col] == "E":
-            if lowest == 0 or res < lowest:
-                lowest = res
-            continue
-
-        state = (curr_row, curr_col, turns, prev_dir)
-        if visited.get(state):
-            continue
-        visited[state] = 1
-
-        for curr_dir in directions_plus:
-            xr, xy = curr_dir
-            new_row = curr_row + xr
-            new_col = curr_col + xy
-
-            # Skip if out of bounds or hitting a wall
-            if (
-                not in_bounds(max_row, max_col, (new_row, new_col))
-                or grid[new_row][new_col] == "#"
-            ):
-                continue
-
-            new_turns = turns
-            if prev_dir and prev_dir != curr_dir:
-                new_turns += 1
-
-            queue.append((new_row, new_col, steps + 1, new_turns, (xr, xy)))
-
-    return lowest
-
-
 def dijkstra_shortest(
     grid: list[list[str]], start: tuple[int, int], end: tuple[int, int]
 ):
     graph = {}
 
     def create_weighted_graph():
-        # First initialize all valid nodes
         for ridx, r in enumerate(grid):
             for cidx, c in enumerate(r):
                 if c == "#":
@@ -131,7 +77,7 @@ def dijkstra_shortest(
                 # Base weight is 1, add 1000 if changing direction
                 weight = 1
                 if prev_dir is not None and dir != prev_dir:
-                    weight = 1001  # Turn penalty plus step
+                    weight = 1001
 
                 distance = current_distance + weight
 
