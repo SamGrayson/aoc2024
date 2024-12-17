@@ -67,3 +67,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 15](day_15)
 
 - [Warehouse Woes](https://adventofcode.com/2024/day/15)
+
+## [Day 16](day_16)
+
+- [Reindeer Maze](https://adventofcode.com/2024/day/16)

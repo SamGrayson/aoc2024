@@ -17,6 +17,13 @@ directions_corners = [
 ]
 
 
+def find_first_str_in_matrix(grid: list[list[str]], test):
+    for ridx, r in enumerate(grid):
+        for cidx, c in enumerate(r):
+            if c == test:
+                return (ridx, cidx)
+
+
 def create_matrix(rows, cols, char_override="."):
     return [[char_override for _ in range(cols)] for _ in range(rows)]
 
