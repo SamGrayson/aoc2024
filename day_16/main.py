@@ -18,13 +18,11 @@ def get_result(l: tuple[int, int]) -> int:
     return turns * 1000 + steps
 
 
-def find_shortest_paths(
-    grid: list[list[str]], start: tuple[int, int]
-) -> tuple[int, int]:
+def find_shortest_paths(grid: list[list[str]], start: tuple[int, int]) -> int:
     max_row = len(grid)
     max_col = len(grid[0])
 
-    visited = set()
+    visited = {}
     start_row, start_col = start
     queue = deque([(start_row, start_col, 0, 0, (0, 0))])
 
@@ -42,10 +40,10 @@ def find_shortest_paths(
                 lowest = res
             continue
 
-        state = (curr_row, curr_col, turns, prev_dir, steps)
-        if state in visited:
+        state = (curr_row, curr_col, turns, prev_dir)
+        if visited.get(state):
             continue
-        visited.add(state)
+        visited[state] = 1
 
         for curr_dir in directions_plus:
             xr, xy = curr_dir
@@ -79,13 +77,10 @@ def part_1():
 def part_2():
     with open(INPUT_PATH) as file:
         input = string_to_grid(file.read())
-        start = find_first_str_in_matrix(input, "S")
-        lowest = find_shortest_paths_seats(input, start)
-        print("Part 2: " + str(lowest))
 
 
 if __name__ == "__main__":
     start_time = time.time()
     part_1()
-    part_2()
+    # part_2()
     print("Finished in: " + str(round(time.time() - start_time)) + "s")
