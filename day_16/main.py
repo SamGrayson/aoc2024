@@ -8,6 +8,7 @@ from utils.utils import (
     find_first_str_in_matrix,
     flip_dir,
     in_bounds,
+    pretty_print_grid,
     string_to_grid,
 )
 
@@ -16,7 +17,10 @@ INPUT_PATH = os.path.join(SCRIPT_DIR, "input.txt")
 
 
 def dijkstra_shortest(
-    grid: list[list[str]], start: tuple[int, int], end: tuple[int, int]
+    grid: list[list[str]],
+    start: tuple[int, int],
+    end: tuple[int, int],
+    start_dir=(0, 1),
 ):
     graph = {}
 
@@ -46,7 +50,7 @@ def dijkstra_shortest(
                             graph[curr_node][new_node] = float("inf")
 
     # Initialize a priority queue
-    pq = [(0, (start, (0, 1)))]
+    pq = [(0, (start, start_dir))]
     heapify(pq)
     create_weighted_graph()
 
@@ -87,11 +91,21 @@ def dijkstra_shortest(
                     previous_nodes[n] = current_node
                     heappush(pq, (distance, (n, dir)))
 
-        return shortest_distances, previous_nodes
+        return shortest_distances
 
-    distances, nodes = add_scoring()
+    distances = add_scoring()
 
-    return distances[end]
+    unique_nodes = set([end])
+    queue = deque([end])
+    while queue:
+        curr = queue.pop()
+        if curr:
+            next = previous_nodes[curr]
+            if next:
+                unique_nodes.add(next)
+                queue.append(next)
+
+    return distances[end], unique_nodes
 
 
 def part_1():
@@ -99,8 +113,31 @@ def part_1():
         input = string_to_grid(file.read())
         start = find_first_str_in_matrix(input, "S")
         end = find_first_str_in_matrix(input, "E")
-        lowest = dijkstra_shortest(input, start, end)
+        lowest, u_nodes = dijkstra_shortest(input, start, end)
+        valid_p = list(u_nodes)
+        valid_p.reverse()
+        prev_dir = (0, 1)
+        for idx, curr in enumerate(valid_p):
+            if idx == len(valid_p) - 1:
+                break
+            next = valid_p[idx + 1]
+            lowest_true, _ = dijkstra_shortest(input, next, end, prev_dir)
+            for dir in directions_plus:
+                p = (curr[0] + dir[0], curr[1] + dir[1])
+                if input[p[0]][p[1]] == "#":
+                    continue
+                if p not in u_nodes:
+                    lowest, new_nodes = dijkstra_shortest(input, p, end, prev_dir)
+                if lowest == lowest_true:
+                    u_nodes = u_nodes.union(new_nodes)
+            prev_dir = (next[0] - curr[0], next[1] - curr[1])
+
+        for n in u_nodes:
+            input[n[0]][n[1]] = "O"
+        pretty_print_grid(input)
+
         print("Part 1: " + str(lowest))
+        print("Part 2: " + str(len(u_nodes)))
 
 
 def part_2():
