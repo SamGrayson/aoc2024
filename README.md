@@ -71,3 +71,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 16](day_16)
 
 - [Reindeer Maze](https://adventofcode.com/2024/day/16)
+
+## [Day 17](day_17)
+
+- [Chronospatial Computer](https://adventofcode.com/2024/day/17)
