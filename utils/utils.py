@@ -24,6 +24,7 @@ def find_first_str_in_matrix(grid: list[list[str]], test):
                 return (ridx, cidx)
 
 
+# Creates a matrix based on passed in amounts 0 indexed
 def create_matrix(rows, cols, char_override="."):
     return [[char_override for _ in range(cols)] for _ in range(rows)]
 

@@ -75,3 +75,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 17](day_17)
 
 - [Chronospatial Computer](https://adventofcode.com/2024/day/17)
+
+## [Day 18](day_18)
+
+- [RAM run](https://adventofcode.com/2024/day/18)
