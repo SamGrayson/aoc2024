@@ -79,3 +79,11 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 18](day_18)
 
 - [RAM run](https://adventofcode.com/2024/day/18)
+
+## [Day 19](day_19)
+
+- [Linen Layout](https://adventofcode.com/2024/day/19)
+
+## [Day 20](day_20)
+
+- [Race Condition](https://adventofcode.com/2024/day/20)

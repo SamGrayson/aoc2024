@@ -1,17 +1,10 @@
 {
-  "python.testing.unittestArgs": ["-v", "-s", "./", "-p", "*test.py"],
-  "python.testing.pytestEnabled": false,
-  "python.testing.unittestEnabled": true,
+  // "python.testing.unittestArgs": ["-v", "-p", "*test.py"],
+  // "python.testing.unittestEnabled": true,
+  // "python.testing.pytestEnabled": false,
   "python.defaultInterpreterPath": "/opt/homebrew/bin/pypy3",
-  "python.envFile": "${workspaceFolder}/.env"
-  // "runItOn": {
-  //   "commands": [
-  //     {
-  //       "match": "\\.py$",
-  //       "isAsync": true,
-  //       "isShellCommand": false,
-  //       "cmd": "testing.runAll"
-  //     }
-  //   ]
-  // }
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.testing.unittestArgs": ["-v", "-s", ".", "-p", "*test*.py"],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true
 }
