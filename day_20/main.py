@@ -3,6 +3,7 @@ from utils.utils import (
     directions_plus,
     find_first_str_in_matrix,
     in_bounds,
+    manhattan_distance,
     string_to_grid,
 )
 import os
@@ -36,6 +37,7 @@ def get_shortest_path(
 
 
 # Max collision is 1 less than the # of "pico" seconds you can trim off (stepping out of a wall is also 1)
+# BFS super slow for part 1
 def get_path_options(
     grid: list,
     start: tuple,
@@ -68,14 +70,6 @@ def get_path_options(
             options[steps] = options.get(steps, 0) + 1
             continue  # Continue to explore other paths
 
-        # If a shorter path to the end has been found
-        # Idk why this isn't working
-        # if collision < max_collision and steps_left.get((cr, cc), None):
-        #     options[steps + steps_left[(cr, cc)]] = (
-        #         options.get(steps + steps_left[(cr, cc)], 0) + 1
-        #     )
-        #     continue
-
         for dir in directions_plus:
             nr, nc = cr + dir[0], cc + dir[1]
 
@@ -93,16 +87,47 @@ def get_path_options(
     return options
 
 
+# Refactor for part 2
+def find_all_cheats(grid: list[list[str]], race_route: dict, max_collision: int):
+    route_list = list(race_route.keys())
+    end = route_list[-1]
+    options = {}
+    for ridx, r in enumerate(grid):
+        for cidx, c in enumerate(r):
+            if c == "#":
+                continue
+            if c == "E":
+                print("Done")
+            curr_idx = route_list.index((ridx, cidx))
+            for p in route_list[curr_idx:]:
+                man_distance = manhattan_distance((ridx, cidx), p)
+                if man_distance > 0 and man_distance <= max_collision:
+                    steps_to_point = race_route[(ridx, cidx)]
+                    steps_to_next = man_distance
+                    steps_to_end = (
+                        race_route[end]
+                        - race_route[p]
+                        + (steps_to_point + steps_to_next)
+                    )
+                    time_saved = race_route[end] - steps_to_end
+                    if time_saved > 0:
+                        options[time_saved] = options.get(time_saved, 0) + 1
+    return options
+
+
 def part_1():
     with open(INPUT_PATH) as file:
         grid = string_to_grid(file.read())
         start = find_first_str_in_matrix(grid, "S")
         end = find_first_str_in_matrix(grid, "E")
-        shortest = get_shortest_path(grid, start, end)
-        options = get_path_options(grid, start, end, shortest - 100)
+        path = get_shortest_path(grid, start, end)
+        options = find_all_cheats(grid, path, 100, 2)
         total = 0
-        for o in options.values():
-            total += o
+        for k, v in sorted(options.items()):
+            if k < 100:
+                continue
+            if k >= 100:
+                total += v
         print("Part 1: " + str(total))
 
 
@@ -111,16 +136,20 @@ def part_2():
         grid = string_to_grid(file.read())
         start = find_first_str_in_matrix(grid, "S")
         end = find_first_str_in_matrix(grid, "E")
-        shortest = get_shortest_path(grid, start, end)
-        options = get_path_options(grid, start, end, shortest - 100, 20)
+        path = get_shortest_path(grid, start, end)
+        # Need to figure out when to cut off..
+        options = find_all_cheats(grid, path, 100, 20)
         total = 0
-        for o in options.values():
-            total += o
+        for k, v in sorted(options.items()):
+            if k < 100:
+                continue
+            if k >= 100:
+                total += v
         print("Part 2: " + str(total))
 
 
 if __name__ == "__main__":
     start_time = time.time()
     part_1()
-    # part_2()
+    part_2()
     print("Finished in: " + str(round(time.time() - start_time)) + "s")
