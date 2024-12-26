@@ -87,3 +87,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 20](day_20)
 
 - [Race Condition](https://adventofcode.com/2024/day/20)
+
+## [Day 21](day_21)
+
+- [Keypad Conundrum](https://adventofcode.com/2024/day/21)
