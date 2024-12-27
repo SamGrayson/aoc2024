@@ -1,4 +1,5 @@
 from collections import deque
+from functools import cache
 import os
 import time
 
@@ -56,140 +57,124 @@ DIR_MAP = {"^": UP, ">": RIGHT, "v": DOWN, "<": LEFT}
 DIR_MAP_STR = {UP: "^", RIGHT: ">", DOWN: "v", LEFT: "<"}
 
 
-def recur_shortest(
-    value: str,
-    max_depth: int = 1,
-    rtype: str = "NUM",
-    start: str = "A",
-    depth: int = 0,
-) -> str:
-    if max_depth == depth:
-        return value
+def do_it(test: str, max_depth: int):
+    dir_path_map = {}
 
-    shortest = ""
-    start = "A"
-    # 029A
-    # <A^A^^>AvvvA
-    # v<<A>>^A<A>AvA<^AA>A<vAAA>^A
-    for c in value:
-        if rtype == "NUM":
-            paths = find_next_paths_in_grid_num(num_pad_local, num_pad, start, c)
-        if rtype == "DIR":
-            paths = find_next_paths_in_grid_dir(dir_pad_local, dir_pad, start, c)
-        for idx, p in enumerate(paths):
-            paths[idx] = recur_shortest((p + "A"), max_depth, "DIR", "A", depth + 1)
-        shortest += sorted(paths, key=len)[0]
-        start = c
+    @cache
+    def recur_shortest(
+        value: str,
+        max_depth: int = 1,
+        rtype: str = "NUM",
+        start: str = "A",
+        depth: int = 0,
+    ) -> str:
+        if max_depth == depth:
+            return len(value)
 
-    return shortest
+        shortest = 0
+        start = "A"
+        for c in value:
+            if rtype == "NUM":
+                paths = find_next_paths_in_grid_num(start, c)
+            else:
+                if (start, c) in dir_path_map:
+                    paths = dir_path_map[(start, c)]
+                else:
+                    paths = find_next_paths_in_grid_dir(start, c)
 
-
-def find_next_paths_in_grid_num(
-    test_grid_local: dict,
-    test_grid: list[list[str]],
-    start: str,
-    target: str,
-):
-    max_r = len(test_grid)
-    max_c = len(test_grid[0])
-    start = test_grid_local[start]
-    end = test_grid_local[target]
-    queue = deque([(start[0], start[1], "")])
-    paths = []
-    short_len = None
-    visited = set()
-    while queue:
-        cr, cc, path = queue.popleft()
-        if (cr, cc, path) in visited:
-            continue
-        visited.add((cr, cc, path))
-        if short_len and len(path) > short_len:
-            continue
-        if (cr, cc) == end:
-            paths.append(path)
-            short_len = len(path)
-            continue
-        # Reordering due to the weight of each away from A - left buttons are farthest from "A"
-        for dir in [RIGHT, UP, DOWN, LEFT]:
-            nr, nc = cr + dir[0], cc + dir[1]
-            if in_bounds(max_r, max_c, (nr, nc)) and test_grid[nr][nc] != "X":
-                queue.append(
-                    (
-                        nr,
-                        nc,
-                        path + DIR_MAP_STR[dir],
-                    )
+            totals = []
+            for p in paths:
+                totals.append(
+                    recur_shortest((p + "A"), max_depth, "DIR", "A", depth + 1)
                 )
-    return paths
 
+            shortest += min(totals)
+            start = c
 
-def find_next_paths_in_grid_dir(
-    test_grid_local: dict,
-    test_grid: list[list[str]],
-    start: str,
-    target: str,
-):
-    max_r = len(test_grid)
-    max_c = len(test_grid[0])
-    start = test_grid_local[start]
-    end = test_grid_local[target]
-    queue = deque([(start[0], start[1], "", 0, (start[0], start[1]))])
-    shortest_pdist = None
-    shortest_path = None
-    visited = set()
-    paths = []
-    while queue:
-        # pdist is the distance to "A" from the next point on the grid..
-        cr, cc, path, pdist, prev_dir = queue.popleft()
-        if (cr, cc, path) in visited:
-            continue
-        visited.add((cr, cc, path))
-        # Go ahead and exit if current path is shorter than shortest path found
-        if shortest_path and len(path) > len(shortest_path):
-            continue
-        if (cr, cc) == end:
-            # If no path set yet, set stuff
-            if not shortest_path:
-                shortest_path = path
-                shortest_pdist = pdist
+        return shortest
+
+    def find_next_paths_in_grid_num(
+        start: str,
+        target: str,
+    ):
+        max_r = len(num_pad)
+        max_c = len(num_pad[0])
+        start = num_pad_local[start]
+        end = num_pad_local[target]
+        queue = deque([(start[0], start[1], "")])
+        paths = []
+        short_len = None
+        visited = set()
+        while queue:
+            cr, cc, path = queue.popleft()
+            if (cr, cc, path) in visited:
+                continue
+            visited.add((cr, cc, path))
+            if short_len and len(path) > short_len:
+                continue
+            if (cr, cc) == end:
                 paths.append(path)
+                short_len = len(path)
                 continue
-            # If paths are the same, but one pdist is less than another - set it
-            if len(path) == len(shortest_path) and pdist <= shortest_pdist:
-                shortest_path = path
-                shortest_pdist = pdist
-                paths.append(path)
-                continue
-            # If paths are the same, but one pdist is higher than another - skip
-            if len(path) == len(shortest_path) and pdist > shortest_pdist:
-                continue
-            continue
-        # Reordering due to the weight of each away from A - left buttons are farthest from "A"
-        for dir in [RIGHT, UP, DOWN, LEFT]:
-            nr, nc = cr + dir[0], cc + dir[1]
-            if in_bounds(max_r, max_c, (nr, nc)) and test_grid[nr][nc] != "X":
-                queue.append(
-                    (
-                        nr,
-                        nc,
-                        path + DIR_MAP_STR[dir],
-                        pdist
-                        + manhattan_distance(
-                            dir_pad_local[DIR_MAP_STR[dir]],
-                            prev_dir,
-                        ),
-                        dir_pad_local[DIR_MAP_STR[dir]],
+            # Reordering due to the weight of each away from A - left buttons are farthest from "A"
+            for dir in [RIGHT, UP, DOWN, LEFT]:
+                nr, nc = cr + dir[0], cc + dir[1]
+                if in_bounds(max_r, max_c, (nr, nc)) and num_pad[nr][nc] != "X":
+                    queue.append(
+                        (
+                            nr,
+                            nc,
+                            path + DIR_MAP_STR[dir],
+                        )
                     )
-                )
-    return paths
+        return paths
+
+    def find_next_paths_in_grid_dir(
+        start: str,
+        target: str,
+    ):
+        max_r = len(dir_pad)
+        max_c = len(dir_pad[0])
+        start = dir_pad_local[start]
+        end = dir_pad_local[target]
+        queue = deque([(start[0], start[1], "")])
+        shortest_path = None
+        visited = set()
+        paths = []
+        while queue:
+            cr, cc, path = queue.popleft()
+            if (cr, cc, path) in visited:
+                continue
+            visited.add((cr, cc, path))
+            # # Go ahead and exit if current path is shorter than shortest path found
+            if shortest_path and (len(path) > len(shortest_path)):
+                continue
+            if (cr, cc) == end:
+                # If no path set yet, set stuff
+                paths.append(path)
+                if not shortest_path:
+                    shortest_path = path
+                    paths.append(path)
+                    continue
+                if len(path) <= len(shortest_path):
+                    shortest_path == path
+            # Reordering due to the weight of each away from A - left buttons are farthest from "A"
+            for dir in [UP, RIGHT, DOWN, LEFT]:
+                nr, nc = cr + dir[0], cc + dir[1]
+                if in_bounds(max_r, max_c, (nr, nc)) and dir_pad[nr][nc] != "X":
+                    queue.append((nr, nc, path + DIR_MAP_STR[dir]))
+        dir_path_map[(start, target)] = paths
+        return paths
+
+    return recur_shortest(test, max_depth)
 
 
 def part_1():
     with open(INPUT_PATH) as file:
         total = 0
         for l in file.readlines():
-            path = recur_shortest(l.strip(), 3)
-            total += len(path) * int(l.replace("A", ""))
+            path_count = do_it(l.strip(), 3)
+            total += path_count * int(l.replace("A", ""))
     print("Part 1: " + str(total))
 
 
@@ -197,9 +182,8 @@ def part_2():
     with open(INPUT_PATH) as file:
         total = 0
         for idx, l in enumerate(file.readlines()):
-            path = recur_shortest(l.strip(), 26)
-            total += len(path) * int(l.replace("A", ""))
-            print(str(idx + 1) + "complete: " + total)
+            path_count = do_it(l.strip(), 26)
+            total += path_count * int(l.replace("A", ""))
     print("Part 2: " + str(total))
 
 
