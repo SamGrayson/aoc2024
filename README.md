@@ -91,3 +91,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 21](day_21)
 
 - [Keypad Conundrum](https://adventofcode.com/2024/day/21)
+
+## [Day 22](day_22)
+
+- [Monkey Market](https://adventofcode.com/2024/day/22)
