@@ -20,7 +20,7 @@ maybe rvc? XOR -> OR
 maybe rrs? AND goes into XOR gate..
 
 
-NOT RIGHT
+CORRECT!
 -------
 [
   "z24",
