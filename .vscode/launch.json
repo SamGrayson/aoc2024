@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "${file}",
       "cwd": "${workspaceRoot}",
-      "pythonPath": "/opt/homebrew/bin/pypy3", // Path to PyPy executable
+      // "pythonPath": "/opt/homebrew/bin/pypy3", // Path to PyPy executable
       "env": { "PYTHONPATH": "${workspaceRoot}" }
     }
   ]

@@ -1,0 +1,38 @@
+target:
+------
+1010011100001111001100111110100010001011001110
+
+Red lines to points:
+Z must be solved with xor opp
+Only Xs & Ys can have xor opp
+------
+BAD OUTPUT TO Z: z24
+BAD OUTPUT TO Z: z20
+BAD INPUT TO XOR: jgb
+BAD INPUT TO XOR: vcg
+BAD OUTPUT TO Z: z09
+BAD INPUT TO XOR: rkf
+
+AND must go to an OR:
+XOR must go to another XOR (for z output):
+-------
+maybe rvc? XOR -> OR
+maybe rrs? AND goes into XOR gate..
+
+
+NOT RIGHT
+-------
+[
+  "z24",
+  "z20",
+  "jgb",
+  "vcg",
+  "z09",
+  "rkf",
+  "rvc",
+  "rrs"
+]
+jgb,rkf,rrs,rvc,vcg,z09,z20,z24
+
+
+WOOOOOO~!~!~!~
