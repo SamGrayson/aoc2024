@@ -103,3 +103,7 @@ Leverages `RunItOn` extension to support [TDD](.vscode/settings.json)
 ## [Day 24](day_24)
 
 - [Crossed Wires](https://adventofcode.com/2024/day/24)
+
+## [Day 25](day_25)
+
+- [Code Chronicle](https://adventofcode.com/2024/day/25)
